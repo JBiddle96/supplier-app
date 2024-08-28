@@ -1,4 +1,5 @@
-FROM mcr.microsoft.com/mssql/server:2022-latest
+# FROM mcr.microsoft.com/mssql/server:2022-latest
+FROM mcr.microsoft.com/mssql/server:2022-CU11-ubuntu-22.04
 USER root
 
 # Create a config directory
