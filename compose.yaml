@@ -1,0 +1,31 @@
+services:
+  app:
+    image: pii-supplier-masking-app:latest
+    build: ./app
+    ports:
+      - "8080:8080"
+    networks:
+      - mssql-network
+    environment:
+      - SERVER=mssql
+      - PORT=1433
+      - MSSQL_PASSWORD=${MSSQL_PASSWORD}
+      - MSSQL_USERNAME=${MSSQL_USERNAME}
+      - DATABASE=${DATABASE}
+      - MASKING_TABLE=${MASKING_TABLE}
+      - SUPPLIER_ID_TABLE=${SUPPLIER_ID_TABLE}
+      - SUPPLIER_TYPE_ID_TABLE=${SUPPLIER_TYPE_ID_TABLE}
+  mssql:
+    image: "mssql-server:2022-latest"
+    build: ./mssql_server
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=y
+      - MSSQL_SA_PASSWORD=${MSSQL_PASSWORD}
+    networks:
+      - mssql-network
+
+networks:
+  mssql-network:
+    name: mssql-network
